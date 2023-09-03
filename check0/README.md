@@ -1,4 +1,6 @@
-# Introduction
+# Check1 Notes
+
+## Introduction
 
 **check0** is an experiment about byte streams. This experiment helps you set up a basic experimental environment, familiarize yourself with the development process, and submission process.
 
