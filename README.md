@@ -8,4 +8,4 @@ According to the requirements of the Stanford course team, I prefer to write abo
 
 - [check0 notes](check0/README.md)
 - [check1 notes](check1/README.md)
-- [check2 notes](check4-arp/README.md)
+- [check4 notes](check4-arp/README.md)
