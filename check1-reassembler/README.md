@@ -34,7 +34,7 @@ My program also involved a step of looking up a `key`. I tried using `map::lower
 
 Benchmark results showed that my implementation version achieved **6.73 Gbit/s**, which is close to the best speed of 10 Gbit/s given by the official test cases. Using `std::array` might make it even faster.
 
-```shell
+```commandline
 cs144@vm:~/minnow$ cmake --build build --target check1
 Test project /home/cs144/minnow/build
       Start  1: compile with bug-checkers

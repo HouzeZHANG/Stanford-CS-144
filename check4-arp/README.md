@@ -96,7 +96,7 @@ In addition, in practical situations, if the TTL of an ARP Reply request expires
 
 Test results:
 
-```shell
+```commandline
 cs144@vm:~/minnow$ cmake --build build --target check4
 Test project /home/cs144/minnow/build
     Start  1: compile with bug-checkers

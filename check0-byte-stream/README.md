@@ -30,7 +30,7 @@ Due to the vulnerabilities in Linux, please use VCS to synchronize your work to 
 
 When using `telnet` to establish an `HTTP` connection with the server, if the request is not sent quickly enough, the server may return a timeout error report, so please type quickly. We noticed that `408` is a timeout indicator.
 
-```shell
+```commandline
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <html><head>
 <title>408 Request Timeout</title>
@@ -42,7 +42,7 @@ When using `telnet` to establish an `HTTP` connection with the server, if the re
 
 The following is the correct response:
 
-```shell
+```commandline
 HTTP/1.1 200 OK
 Date: Wed, 30 Aug 2023 03:15:48 GMT
 Server: Apache
@@ -60,7 +60,7 @@ I am not currently a Stanford student, so I do not have a Stanford Email account
 
 First, make sure you can `ping` the school's email sending server.
 
-```shell
+```commandline
 cs144@vm:~/lab0$ ping smtps.utc.fr
 PING smtps.utc.fr (195.83.155.8) 56(84) bytes of data.
 64 bytes from smtps.utc.fr (195.83.155.8): icmp_seq=1 ttl=46 time=70.8 ms
@@ -70,7 +70,7 @@ PING smtps.utc.fr (195.83.155.8) 56(84) bytes of data.
 
 Our school's mail server can only be used with `smtps`.
 
-```shell
+```commandline
 cs144@vm:~/lab0$ telnet 195.83.155.8 smtps
 Trying 195.83.155.8...
 Connected to 195.83.155.8.
@@ -80,7 +80,7 @@ Escape character is '^]'.
 
 Try with a `QQ mail` mailbox.
 
-```shell
+```commandline
 cs144@vm:~/lab0$ ping smtp.qq.com
 PING smtp.qq.com (43.129.255.54) 56(84) bytes of data.
 64 bytes from 43.129.255.54 (43.129.255.54): icmp_seq=1 ttl=47 time=294 ms
@@ -90,7 +90,7 @@ PING smtp.qq.com (43.129.255.54) 56(84) bytes of data.
 
 It worked, both `smtp` and `smtps` are supported by the `QQ mail` server.
 
-```shell
+```commandline
 cs144@vm:~/lab0$ telnet 43.129.255.54 smtp
 Trying 43.129.255.54...
 Connected to 43.129.255.54.
@@ -119,6 +119,14 @@ The theme of this experiment is to use `Socket` to simulate the functionality of
 
 When compiling, you need to enter the `build` directory before compiling. You can modify the test cases, but please do not modify the `CMakeLists.txt` file without authorization.
 
+If you feel like the test samples don't cover it all, you might be curious to click on the github site and check out the branches. You realize that there are a lot of branches and that there are commits for the test samples on other branches, while you're only working on the main branch right now. You wonder if you've chosen the wrong branch. Then you start merging branches and messing up your local repository.
+
+Yes, I did do that before, but **please trust the official repository to be correct and always work on the main branch version**. In subsequent experiments, **the experimental documentation will guide you step by step to merge these branches one by one** to the main branch.
+
+This will add new test samples to the previous experiments, and **your previous code may not pass the new test samples**, but please be patient and fix the mistakes you made before.
+
+Note that merging these branches early will disrupt your development and testing environment.
+
 The last sentence of the request message needs to include two sets of newline characters.
 
 ```C++
@@ -129,7 +137,7 @@ const string request = "GET " + path + " HTTP/1.1\r\n" +
 
 Before writing the program, make sure you understand the concept of `string_view`. Incorrect use of `string_view` can result in garbled messages, and garbled request headers will cause the server to be unable to parse the request and return a `400 Bad Request` error.
 
-```shell
+```commandline
 cs144@vm:~/minnow/build$ ./apps/webget cs144.keithw.org /hello
 Function called: get_URL(cs144.keithw.org, /hello)
 HTTP/1.1 400 Bad Request
@@ -153,7 +161,7 @@ Content-Type: text/html; charset=iso-8859-1
 
 The correct result is as follows, you should receive a `200 OK` response. Please do not add extra `\n` to `cout`, as this will cause the test to fail.
 
-```shell
+```commandline
 cs144@vm:~/minnow/build$ ./apps/webget cs144.keithw.org /hello
 Function called: get_URL(cs144.keithw.org, /hello)
 HTTP/1.1 200 OK
@@ -171,7 +179,7 @@ Hello, CS144!
 
 The correct test result:
 
-```shell
+```commandline
 cs144@vm:~/cs144/minnow$ cmake --build build --target check_webget
 Test project /home/cs144/cs144/minnow/build
     Start 1: compile with bug-checkers
@@ -201,7 +209,7 @@ The pitfall of `string_view` is that if you create a view for a local variable `
 
 After the initial implementation, the benchmark results of my program were as follows:
 
-```shell
+```commandline
 cs144@vm:~/minnow$ cmake --build build --target check0
 Test project /home/cs144/minnow/build
       Start  1: compile with bug-checkers
@@ -228,7 +236,7 @@ Test project /home/cs144/minnow/build
 
 I tried adjusting the construction of `string` using iterators, which reduced the program's execution time to about one-tenth of the previous time.
 
-```c++
+```commandline
 cs144@vm:~/minnow$ cmake --build build --target check0
 Test project /home/cs144/minnow/build
       Start  1: compile with bug-checkers
@@ -258,7 +266,7 @@ Exception: ByteStream did not meet the minimum speed of 0.1 Gbit/s.
 
 It still did not meet the requirement, so I tried adjusting the underlying container to `string`, and the benchmark result was nearly ten times faster, successfully passing the speed test.
 
-```shell
+```commandline
 cs144@vm:~/minnow$ cmake --build build --target check0
 Test project /home/cs144/minnow/build
       Start  1: compile with bug-checkers
