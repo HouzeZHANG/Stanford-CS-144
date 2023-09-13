@@ -10,3 +10,4 @@ According to the requirements of the Stanford course team, I prefer to write abo
 - [check1 notes](check1/README.md)
 - [check4 notes](check4-arp/README.md)
 - [check5 notes](check5-ip-router/README.md)
+- [check6 notes](check6-network/README.md)
