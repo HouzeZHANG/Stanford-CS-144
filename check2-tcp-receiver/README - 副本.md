@@ -2,39 +2,40 @@
 
 ## Introduction
 
-TCP receiver has two main responsibilities:
-- Assemble information received from the peer into a reassembler, allowing the reassembler to gradually put together the data the sender intends to send.
-- Continuously update the window size and send flow control information, such as window size, back to the sender through acknowledgments.
+TCP receiver 的主要职责有两个
+- 将从对等体收到的信息装入组装器，这样组装器就能逐步拼凑出发送端希望发送的数据
+- 实时更新窗口大小，然后将窗口大小等流量控制信息通过ack回报返还给发送方
 
-Additionally, TCP itself can only represent 32 bits, but logically, a stream is infinite. Therefore, TCP needs a method to represent 64 bits of data using a 32-bit sequence number. This involves three concepts: Sequence Numbers, Absolute Sequence Numbers, and Stream Indices.
+此外，TCP本身只能表示32位，但逻辑上，流是无限长的，所以TCP需要一个方法，用32位seq来表示64位的数据：这里涉及三个概念，Sequence Numbers，Absolute Sequence Numbers和Stream Indices。
 
 - Absolute Sequence Numbers
-64-bit absolute coordinates
+64位绝对坐标
 
 - Sequence Numbers
-Coordinates within the data packet
+实际在数据包中的坐标
 
 - Stream Indices
-64-bit absolute coordinates, but ignoring the SYN/FIN bits. Note that Absolute Sequence Numbers include SYN/FIN bits.
+64位绝对坐标，但忽略SYN/FIN位，注意，Absolute Sequence Numbers包含SYN/FIN位。
 
-This experiment requires you to implement the conversion between Absolute Sequence Numbers and Sequence Numbers, as well as complete the logic for TCP acknowledgment.
+本实验需要你实现Absolute Sequence Numbers和Sequence Numbers之间的转换，同时完成TCP回报的逻辑。
 
 ## Hint
 
 ### Wrap
 
-Think about how to convert a 64-bit unsigned integer to a 32-bit unsigned integer.
+思考如何将64位无符号整数转化32位无符号整数。
 
-Taking the last 32 bits of an unsigned integer is equivalent to taking it modulo $2^{32}$. Special handling is required when `interval == 0` because `interval - 1` will make `left_candidate` very large.
+对无符号整数类型取后32位相当于对它取$2^32$模，在`interval == 0`的时候要特殊处理，因为`interval - 1`会让`left_candidate`变得很大。
 
-Handling the bit count of `long long`, which is 64 bits, when comparing three 64-bit unsigned integer types can be tricky:
+`long long`的位数为64位，比较三个64位无符号整数类型的问题比较棘手
 ```c++
 return abs((long long)right_candidate - (long long)checkpoint) >= abs((long long)left_candidate - (long long)checkpoint) ? 
 		left_candidate : 
 		right_candidate;
 ```
 
-You can divide it into three intervals for comparison, ensuring that it's not the first interval:
+你可以在确保不是第一个interval的情况下，划分为三个区间，进行区间比较：
+
 ```c++
 if (left_candidate >= checkpoint) {
 	return left_candidate;
@@ -51,7 +52,8 @@ else {
 }
 ```
 
-Additionally, the test cases tell us that SYN itself occupies one sequence number:
+此外，测试用例告诉我们，SYN本身就占据了一个seq
+
 ```c++
 test.execute( SegmentArrives {}.with_syn().with_seqno( 0 ) );
 test.execute( ExpectAckno { Wrap32 { 1 } } );
@@ -63,7 +65,8 @@ if (isn_set) {
 }
 ```
 
-Execution results:
+运行结果
+
 ```shell
 cs144@vm:~/minnow$ cmake --build build --target check2
 Test project /home/cs144/minnow/build
@@ -130,8 +133,6 @@ Test project /home/cs144/minnow/build
 
 100% tests passed, 0 tests failed out of 29
 
-Total Test time (real) =   8
-
-.44 sec
+Total Test time (real) =   8.44 sec
 Built target check2
 ```

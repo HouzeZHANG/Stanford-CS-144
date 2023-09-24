@@ -32,6 +32,14 @@ TCP的稳定性很重要，但执行速度和benchmark结果同样理应是TCP�
 
 benchmark结果显示我的实现版本来到了6.73 Gbit/s，和官方给出的最佳速度10 Gbit/s比较接近，也许使用`std::array`会更快。
 
+## 关于`substr`
+
+`substr(index1, len)`
+截取`index1`开始的某一段长度为`len`的字符串
+
+`substr(iterator_)`
+截取从`iterator_`开始到结尾的子串
+
 ```shell
 cs144@vm:~/minnow$ cmake --build build --target check1
 Test project /home/cs144/minnow/build
